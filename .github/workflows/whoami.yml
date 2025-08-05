@@ -11,12 +11,25 @@ on:
       - beanow/whoami
 
 jobs:
-  deploy:
+  whoami:
     # prevents this action from running on forks
     if: github.repository_owner == 'tauri-apps'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          run_install: false
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+      
       - uses: cloudflare/wrangler-action@v3
         with:
           command: whoami
