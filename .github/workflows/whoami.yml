@@ -1,0 +1,25 @@
+# Copyright 2019-2022 Tauri Programme within The Commons Conservancy
+# SPDX-License-Identifier: Apache-2.0
+# SPDX-License-Identifier: MIT
+
+name: Check login for cloudflare
+
+on:
+  push:
+    branches:
+      - dev
+      - beanow/whoami
+
+jobs:
+  deploy:
+    # prevents this action from running on forks
+    if: github.repository_owner == 'tauri-apps'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: cloudflare/wrangler-action@v3
+        with:
+          command: whoami
+          workingDirectory: 'worker'
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          accountId: ${{ secrets.CF_ACCOUNT_ID }}
