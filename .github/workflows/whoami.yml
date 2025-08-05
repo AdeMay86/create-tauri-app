@@ -29,10 +29,10 @@ jobs:
           cache: pnpm
 
       - run: pnpm install --frozen-lockfile
-      
+
       - uses: cloudflare/wrangler-action@v3
         with:
           command: whoami
           workingDirectory: 'worker'
-          apiToken: ${{ secrets.CF_API_TOKEN }}
+          apiToken: ${{ secrets.CF_API_TOKEN_A }}
           accountId: ${{ secrets.CF_ACCOUNT_ID }}
